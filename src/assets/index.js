@@ -1,4 +1,4 @@
-import logo from "./lws-logo-en";
+import logo from "./lws-logo-en.svg";
 import frame from "./frame.png";
 
 const assets = {
