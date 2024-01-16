@@ -1,6 +1,16 @@
-const SearchTask = () => {
+/* eslint-disable react/prop-types */
+import { useState } from "react";
+
+const SearchTask = ({ onSearch }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSearch(searchTerm);
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="flex">
         <div className="relative overflow-hidden rounded-lg text-gray-50 md:min-w-[380px] lg:min-w-[440px]">
           <input
@@ -9,6 +19,8 @@ const SearchTask = () => {
             className="z-20 block w-full bg-gray-800 px-4 py-2 pr-10 focus:outline-none"
             placeholder="Search Task"
             required
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
           <button
             type="submit"

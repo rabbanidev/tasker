@@ -3,6 +3,7 @@ import SearchTask from "./SearchTask";
 import TaskActions from "./TaskActions";
 import TaskList from "./TaskList";
 import TaskForm from "./TaskForm";
+import NoTasksFound from "./NoTasksFound";
 
 const defaultTask = {
   id: crypto.randomUUID(),
@@ -61,6 +62,21 @@ const TaskBoard = () => {
     setTasks(nextTasks);
   };
 
+  // All Delete tasks
+  const handleDeleteAllTask = () => {
+    tasks.length = 0;
+    setTasks([...tasks]);
+  };
+
+  // Search task
+  const handleSearch = (searchTerm) => {
+    const filteredTasks = tasks.filter((task) =>
+      task.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    setTasks(filteredTasks);
+  };
+
   // Close modal
   const handleClose = () => {
     setUpdateTask(null);
@@ -78,16 +94,23 @@ const TaskBoard = () => {
       )}
       <div className="container">
         <div className="p-2 flex justify-end">
-          <SearchTask />
+          <SearchTask onSearch={handleSearch} />
         </div>
         <div className="rounded-xl border border-[rgba(206,206,206,0.12)] bg-[#1D212B] px-6 py-8 md:px-9 md:py-16">
-          <TaskActions onShow={() => setShowModal(true)} />
-          <TaskList
-            tasks={tasks}
-            onUpdate={handleUpdateTask}
-            onDelete={handleDeleteTask}
-            onFavourite={handleFavouriteTask}
+          <TaskActions
+            onShow={() => setShowModal(true)}
+            onDeleteAll={handleDeleteAllTask}
           />
+          {tasks.length > 0 ? (
+            <TaskList
+              tasks={tasks}
+              onUpdate={handleUpdateTask}
+              onDelete={handleDeleteTask}
+              onFavourite={handleFavouriteTask}
+            />
+          ) : (
+            <NoTasksFound />
+          )}
         </div>
       </div>
     </section>

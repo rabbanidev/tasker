@@ -34,9 +34,9 @@ const TaskList = ({ tasks = [], onUpdate, onDelete, onFavourite }) => {
               className="border-b border-[#2E3443] [&>td]:align-baseline [&>td]:px-4 [&>td]:py-2"
             >
               <td>
-                <span onClick={() => onFavourite(task.id)}>
+                <button onClick={() => onFavourite(task.id)}>
                   {task.isFavorite ? <Favourite /> : <NonFavourite />}
-                </span>
+                </button>
               </td>
               <td>{task.title}</td>
               <td>
