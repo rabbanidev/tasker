@@ -3,7 +3,7 @@ import Favourite from "../../icons/Favourite";
 import NonFavourite from "../../icons/NonFavourite";
 import randomColorPick from "../../utils/randomColorPick";
 
-const TaskList = ({ tasks = [] }) => {
+const TaskList = ({ tasks = [], onUpdate, onDelete, onFavourite }) => {
   return (
     <div className="overflow-auto">
       <table className="table-fixed overflow-auto xl:w-full">
@@ -33,7 +33,11 @@ const TaskList = ({ tasks = [] }) => {
               key={task.id}
               className="border-b border-[#2E3443] [&>td]:align-baseline [&>td]:px-4 [&>td]:py-2"
             >
-              <td>{task.isFavorite ? <Favourite /> : <NonFavourite />}</td>
+              <td>
+                <span onClick={() => onFavourite(task.id)}>
+                  {task.isFavorite ? <Favourite /> : <NonFavourite />}
+                </span>
+              </td>
               <td>{task.title}</td>
               <td>
                 <div>{task.description}</div>
@@ -57,8 +61,18 @@ const TaskList = ({ tasks = [] }) => {
               <td className="text-center">{task.priority}</td>
               <td>
                 <div className="flex items-center justify-center space-x-3">
-                  <button className="text-red-500">Delete</button>
-                  <button className="text-blue-500">Edit</button>
+                  <button
+                    className="text-red-500"
+                    onClick={() => onDelete(task.id)}
+                  >
+                    Delete
+                  </button>
+                  <button
+                    className="text-blue-500"
+                    onClick={() => onUpdate(task)}
+                  >
+                    Edit
+                  </button>
                 </div>
               </td>
             </tr>
